@@ -1,7 +1,6 @@
 #! /bin/bash 
 
 # This script was made by loudtrexx (https://github.com/loudtrexx)
-# I had to do this because the ytl team was too lazy to do it themselves
 
 # Start by making the shortcuts to simplify things
 # If we're not root we can create the shortcuts, otherwise no
