@@ -2,17 +2,17 @@ import Adafruit_CharLCD as LCD
 import time
 import sys
 
-lcd = LCD.Adafruit_CharLCDBackpack(address=0x21)
-speed = 0.5
-def splash():
+lcd = LCD.Adafruit_CharLCDBackpack(address=0x21) # Here we define the lcd address. It might not be 0x21 but it might be
+speed = 0.5 # Manage the scrolling speed of the text. .5 is really good but you can speed it up by decreasing the value and vice versa
+def splash(): # Custom start splash. Customise it as you like 
     lcd.set_backlight(0)
     lcd.message("Suzuka Corp.")
     lcd.set_cursor(0, 1)
-    lcd.message("(c) 2025")
+    lcd.message("(c) 2026")
     time.sleep(2)
     lcd.clear()
     
-def motd():
+def motd(): # Now unused defunct version of the motd.
     while True:
         try:
             lcd.clear()
@@ -167,7 +167,7 @@ def motd():
             lcd.message(".")
             time.sleep(speed)
             lcd.clear()
-            time.sleep(speed)
+            time.sleep(speed) # Horrible, bloated, and unreadable. Instead there's a new better_motd function
         except KeyboardInterrupt:
             lcd.clear()
             lcd.message("See you!")
@@ -175,7 +175,7 @@ def motd():
             lcd.set_backlight(1)
             lcd.clear()
             break
-def seeya():
+def seeya(): # Funcion to exit the program on ctrl c or whatever you'd like else
     status = False
     lcd.clear()
     lcd.message("See you!")
@@ -187,22 +187,22 @@ def seeya():
 def better_motd(word):
     try:
         lcd.set_backlight(0)
-        word = " " * 16 + word + " " * 16
-        for i in range(len(word) - 15):
+        word = " " * 16 + word + " " * 16 # Add padding to keep the scrolling words appart from each other
+        for i in range(len(word) - 15): # Using for loop we can make the scrolling of the text easy, manageable and unbloated
             lcd.set_cursor(0, 0)
             lcd.message(word[i:i+16])
-            time.sleep(.5)
+            time.sleep(.5) # Notice how much easier it is to read and now you can choose the word you want to display
     except KeyboardInterrupt:
         seeya()
     
 if __name__ == "__main__":
     splash()
     try:
-        while True:
+        while True: # Example usage cases
             better_motd("Today's anime is love is war.")
             better_motd("NEWS")
             better_motd("Iltalehti: Nyt tuli viimeinen sana ja se on ei")
-            better_motd("MTV: Taman takia kultakorujaan myyvan on syyta olla tarkkana ")
+            better_motd("MTV: Tämän takia kultakorujaan myyvän on syyta olla tarkkana ")
             better_motd("WEATHER")
             better_motd("Tracen academy: -15C")
             better_motd("The hottest umamusume title has been given to Agnes Tachyon. Runners up include Silence Suzuka, Tokai Teio and Symboli Rudolf.")
