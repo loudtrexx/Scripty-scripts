@@ -1,5 +1,6 @@
 import Adafruit_CharLCD as LCD
 import time
+import sys
 
 lcd = LCD.Adafruit_CharLCDBackpack(address=0x21)
 speed = 0.5
@@ -174,12 +175,36 @@ def motd():
             lcd.set_backlight(1)
             lcd.clear()
             break
-def better_motd(word):
-    lcd.set_backlight(0)
-    word = word  +
-    for i in range(len(word))
+def seeya():
+    status = False
+    lcd.clear()
+    lcd.message("See you!")
+    time.sleep(2)
+    lcd.set_backlight(1)
+    lcd.clear()
+    sys.exit()
     
+def better_motd(word):
+    try:
+        lcd.set_backlight(0)
+        word = " " * 16 + word + " " * 16
+        for i in range(len(word) - 15):
+            lcd.set_cursor(0, 0)
+            lcd.message(word[i:i+16])
+            time.sleep(.5)
+    except KeyboardInterrupt:
+        seeya()
     
 if __name__ == "__main__":
     splash()
-    better_motd("Today's anime is love is war.")
+    try:
+        while True:
+            better_motd("Today's anime is love is war.")
+            better_motd("NEWS")
+            better_motd("Iltalehti: Nyt tuli viimeinen sana ja se on ei")
+            better_motd("MTV: Taman takia kultakorujaan myyvan on syyta olla tarkkana ")
+            better_motd("WEATHER")
+            better_motd("Tracen academy: -15C")
+            better_motd("The hottest umamusume title has been given to Agnes Tachyon. Runners up include Silence Suzuka, Tokai Teio and Symboli Rudolf.")
+    except KeyboardInterrupt:
+        print("Stopped.")
