@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://github.com/loudtrexx/Scripty-scripts/
 # Usage under the terms of GPL 3.0
-# Curren-chan
+# Haaai, Curren-chan Desu~<3
 
 # Find all whole USB removable devices (e.g., /dev/sdb, /dev/sdc)
 devices=$(lsblk -dpno NAME,TRAN,RM | awk '$2=="usb" && $3=="1" {print $1}')
@@ -29,16 +29,16 @@ case "$FS" in # You can select another type of fs in case exfat is not to your t
     exit 1
 esac
 
-if [ -n "$REQ" ]; then
+if [ -n "$REQ" ]; then # Check if the required dependencies are installed
     if ! command -v "$MKFS" >/dev/null 2>&1; then
     echo "Missing dependency $REQ required for $FS"
-    echo "Install it from your package manager"
+    echo "Install it from your package manager" # apt, pacman, dnf, emerge etc.
     exit 1
     fi
 fi
 
 if [ -z "$devices" ]; then
-    echo "No USB devices detected."
+    echo "No USB devices detected." # If no usbs are found
     exit 1
 fi
 
