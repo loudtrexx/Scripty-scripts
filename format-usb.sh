@@ -9,15 +9,19 @@ FS=${1:-exfat}
 case "$FS" in # You can select another type of fs in case exfat is not to your taste
     exfat)
         MKFS="mkfs.exfat"
+        PARAM="-n"
         ;;
     vfat|fat32)
         MKFS="mkfs.vfat"
+        PARAM="-n"
         ;;
     ext4)
         MKFS="mkfs.ext4"
+        PARAM="-F -L"
         ;;
     ntfs)
         MKFS="mkfs.ntfs"
+        PARAM="-f -L"
         ;;
 *)
     echo "Invalid filesystem: $FS"
@@ -39,7 +43,7 @@ for dev in $devices; do
     sudo umount ${dev}* 2>/dev/null
 
     # Format the whole device
-    sudo $MKFS -n "$label" "$dev"
+    sudo $MKFS $PARAM "$label" "$dev"
 
     i=$((i+1))
 done
