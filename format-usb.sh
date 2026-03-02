@@ -9,33 +9,21 @@ FS=${1:-exfat}
 case "$FS" in # You can select another type of fs in case exfat is not to your taste
     exfat)
         MKFS="mkfs.exfat"
-        REQ="exfatprogs"
         ;;
     vfat|fat32)
         MKFS="mkfs.vfat"
-        REQ=""
         ;;
     ext4)
         MKFS="mkfs.ext4"
-        REQ=""
         ;;
     ntfs)
         MKFS="mkfs.ntfs"
-        REQ="ntfs-3g"
         ;;
 *)
     echo "Invalid filesystem: $FS"
     echo "Tip: Uncommon filesystems such as btrfs, xfs and zfs are currently not supported" # You're never gonna use those on an usb, right?
     exit 1
 esac
-
-if [ -n "$REQ" ]; then # Check if the required dependencies are installed
-    if ! command -v "$MKFS" >/dev/null 2>&1; then
-    echo "Missing dependency $REQ required for $FS"
-    echo "Install it from your package manager" # apt, pacman, dnf, emerge etc.
-    exit 1
-    fi
-fi
 
 if [ -z "$devices" ]; then
     echo "No USB devices detected." # If no usbs are found
