@@ -17,7 +17,7 @@ case "$FS" in # You can select another type of fs in case exfat is not to your t
         ;;
     ext4)
         MKFS="mkfs.ext4"
-        PARAM="-F -L"
+        PARAM="-f -F -L"
         ;;
     ntfs)
         MKFS="mkfs.ntfs"
