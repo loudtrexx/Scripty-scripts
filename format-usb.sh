@@ -17,11 +17,11 @@ case "$FS" in # You can select another type of fs in case exfat is not to your t
         ;;
     ext4)
         MKFS="mkfs.ext4"
-        PARAM="-f -F -L"
+        PARAM="-F -L"
         ;;
     ntfs)
         MKFS="mkfs.ntfs"
-        PARAM="-f -L"
+        PARAM="-f -F -L"
         ;;
 *)
     echo "Invalid filesystem: $FS"
