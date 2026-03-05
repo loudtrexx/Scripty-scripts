@@ -1,6 +1,6 @@
 #!/bin/bash
 # https://github.com/loudtrexx/Scripty-scripts/
-# Usage under the terms of GPL 3.0
+# Usage under the terms of BSD-3 clause
 # Haaai, Curren-chan Desu~<3
 
 # Find all whole USB removable devices (e.g., /dev/sdb, /dev/sdc)
