@@ -41,6 +41,19 @@ Tip: Uncommon filesystems such as btrfs, xfs and zfs are not supported\n" # You'
     exit 1
 esac
 
+if type $MKFS >/dev/null 2>&1; then
+	:
+else
+	if [ "$MKFS" == "mkfs.exfat" ]; then
+		printf "exprogs is missing from your system! Please install it via your package manager!"
+		exit 1
+	elif [ "$MKFS" == "mkfs.ntfs" ]; then
+		printf "ntfs-3g is missing from your system! Please install it via your package manager!"
+		exit 1
+	else
+		printf "Something went wrong trying to verify the existance of the provided file system utility for $FS."
+		exit 1
+
 if [ -z "$devices" ]; then
     echo "No USB devices detected." # If no usbs are found
     exit 1
