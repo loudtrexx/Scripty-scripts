@@ -41,7 +41,7 @@ Tip: Uncommon filesystems such as btrfs, xfs and zfs are not supported\n" # You'
     exit 1
 esac
 
-if type $MKFS >/dev/null 2>&1; then
+if type "$MKFS" >/dev/null 2>&1; then
 	:
 else
 	if [ "$MKFS" == "mkfs.exfat" ]; then
@@ -53,6 +53,8 @@ else
 	else
 		printf "Something went wrong trying to verify the existance of the provided file system utility for $FS."
 		exit 1
+	fi
+fi
 
 if [ -z "$devices" ]; then
     echo "No USB devices detected." # If no usbs are found
