@@ -33,10 +33,15 @@ case "$FS" in # You can select another type of fs in case exfat is not to your t
  ./format-usb.sh [FILE SYSTEM] [LABEL] [RETABLE (Optional)]\n
  ./format-usb.sh fat32 \u2013 Format the USB drive as fat32\n
  ./format-usb.sh exfat \"Suzuka usb\" \u2013 Format the drive as exfat with the label \"Suzuka usb\"\n
- ./format-usb.sh exfat \"\" retable \u2013 Format the exfat with the label \"USB01\" and rebuild the GPT partition table\n
+ ./format-usb.sh exfat \"\" --zero-disk \u2013 Format the exfat with the label \"USB01\" and rebuild the GPT partition table\n
 ./format-usb.sh \u2013 Format the drive as exfat with label USB01 (If multiple usbs the next one will be USB02)
 Encountered an error? Make sure you have ntfs-3g or exfatprogs installed\n"
 	exit 1
+	;;
+-c|--credits)
+	printf "Format USB script by loudtrexx (https://github.com/loudtrexx)\n
+	Licensed under BSD-3-Clause \n
+	\"Formatting USBs has never been easier!\" -Nobody ever "
 	;;
 *)
     printf "Invalid filesystem: $FS\n
@@ -67,11 +72,12 @@ fi
 i=1
 for dev in $devices; do
     case "$RETABLE" in
-    	retable) # Has the user metioned that they want a retable? (Also stop crying about it we'll make a gpt table)
+    	--zero-disk) # Has the user metioned that they want a retable? (Also stop crying about it we'll make a gpt table)
     		sudo umount "$dev"
+			sudo dd /dev/zero "$dev"
 		if type sgdisk >/dev/null 2>&1; then # If sgdisk is installed (Comes with gdisk)
        		 sudo sgdisk --zap-all "$dev"
-        	 sudo sgdisk --clear "$dev" # If there are any errors consided dd /dev/zero $dev zero-disk parameter might apear in the future
+        	 sudo sgdisk --clear "$dev" 
         	 sudo sgdisk -n 1:0:0 -t 1:8300 "$dev" # Make a single partition with the full capacity
     		 sudo partprobe "$dev"
 		else
