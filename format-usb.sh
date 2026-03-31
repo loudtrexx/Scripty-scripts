@@ -74,7 +74,7 @@ for dev in $devices; do
     case "$RETABLE" in
     	--zero-disk) # Has the user metioned that they want a retable? (Also stop crying about it we'll make a gpt table)
     		sudo umount "$dev"
-			sudo dd /dev/zero "$dev"
+			sudo dd if=/dev/zero of="$dev"
 		if type sgdisk >/dev/null 2>&1; then # If sgdisk is installed (Comes with gdisk)
        		 sudo sgdisk --zap-all "$dev"
         	 sudo sgdisk --clear "$dev" 
